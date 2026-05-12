@@ -1,8 +1,19 @@
 package game.factory;
 
+import game.Item;
 import game.Room;
 
-public abstract class RoomFactory {
+public class ArmoryRoomFactory extends RoomFactory {
 
-    public abstract Room createRoom();
+    @Override
+    public Room createRoom() {
+        Room room = new Room(
+                "Armory",
+                "You are in an old armory. Broken weapons and rusty shields are scattered everywhere."
+        );
+
+        room.setItem(new Item("key", "A small iron key. It might unlock the exit."));
+
+        return room;
+    }
 }

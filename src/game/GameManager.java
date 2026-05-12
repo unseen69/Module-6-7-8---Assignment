@@ -134,24 +134,22 @@ public class GameManager {
         System.out.println("Commands:");
 
         System.out.printf("%-28s %-28s %-28s%n",
-                "L - Look - Look around",
-                "I - Inventory - Show items",
-                "Q - Quit - Quit game");
+                "L/look - Look around",
+                "I/inventory - Show items",
+                "Q/quit - Quit game");
 
         System.out.printf("%-28s %-28s %-28s%n",
-                "M - North - Move north",
-                "M - South - Move south",
-                "M - East - Move east");
+                "M north - Move north",
+                "M south - Move south",
+                "M east - Move east");
 
         System.out.printf("%-28s %-28s %-28s%n",
                 "M west - Move west",
-                "T - Take item " + roomItem,
-                "U - Use item " + inventoryItems);
+                "T/take " + roomItem,
+                "U/use " + inventoryItems);
 
         System.out.println();
     }
-
-
 
     public void moveToRoom(Room room) {
         currentRoom = room;

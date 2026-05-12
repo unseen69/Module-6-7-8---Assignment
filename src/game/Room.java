@@ -47,6 +47,14 @@ public class Room {
         return foundItem;
     }
 
+    public String getAvailableItemName() {
+        if (item == null) {
+            return "none";
+        }
+
+        return item.getName();
+    }
+
     public String getName() {
         return name;
     }
