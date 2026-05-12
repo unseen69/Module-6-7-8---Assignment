@@ -8,19 +8,17 @@ public class TakeItemStrategy implements ActionStrategy {
 
     @Override
     public void execute(Player player, Room room, String itemName) {
-        if (itemName == null || itemName.isEmpty()) {
+        if (itemName == null || itemName.isBlank()) {
             System.out.println("Take what?");
             return;
         }
 
-        if (!room.hasItem(itemName)) {
-            System.out.println("There is no " + itemName + " here.");
-            return;
+        if (room.hasItem(itemName)) {
+            Item item = room.removeItem();
+            player.addItem(item);
+            System.out.println("You picked up the " + item.getName() + ".");
+        } else {
+            System.out.println("That item is not here.");
         }
-
-        Item item = room.removeItem();
-        player.addItem(item);
-
-        System.out.println("You picked up the " + item.getName() + ".");
     }
 }

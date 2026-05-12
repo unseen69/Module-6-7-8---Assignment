@@ -14,7 +14,7 @@ public class MoveStrategy implements ActionStrategy {
 
     @Override
     public void execute(Player player, Room room, String direction) {
-        if (direction == null || direction.isEmpty()) {
+        if (direction == null || direction.isBlank()) {
             System.out.println("Move where?");
             return;
         }
@@ -22,7 +22,12 @@ public class MoveStrategy implements ActionStrategy {
         Room nextRoom = room.getExit(direction);
 
         if (nextRoom == null) {
-            System.out.println("You cannot move that way.");
+            System.out.println("You cannot go that way.");
+            return;
+        }
+
+        if (nextRoom.isLockedExitRoom() && !player.hasItem("key")) {
+            System.out.println("The exit is locked. You need a key.");
             return;
         }
 

@@ -7,18 +7,18 @@ public class UseItemStrategy implements ActionStrategy {
 
     @Override
     public void execute(Player player, Room room, String itemName) {
-        if (itemName == null || itemName.isEmpty()) {
+        if (itemName == null || itemName.isBlank()) {
             System.out.println("Use what?");
             return;
         }
 
         if (!player.hasItem(itemName)) {
-            System.out.println("You do not have a " + itemName + ".");
+            System.out.println("You do not have that item.");
             return;
         }
 
-        if (room.isLockedExitRoom() && itemName.equalsIgnoreCase("key")) {
-            System.out.println("You unlock the exit door with the key.");
+        if (itemName.equalsIgnoreCase("key") && room.isLockedExitRoom()) {
+            System.out.println("You use the key and unlock the exit.");
             player.setEscaped(true);
         } else {
             System.out.println("You cannot use that here.");

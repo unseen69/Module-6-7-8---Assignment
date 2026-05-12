@@ -10,6 +10,10 @@ import game.command.UseCommand;
 import game.factory.ArmoryRoomFactory;
 import game.factory.DungeonRoomFactory;
 import game.factory.ExitRoomFactory;
+import game.factory.HallwayRoomFactory;
+import game.factory.LibraryRoomFactory;
+import game.factory.TrapRoomFactory;
+import game.factory.TreasureRoomFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -70,16 +74,43 @@ public class GameManager {
         player = new Player("Adventurer");
 
         Room dungeon = new DungeonRoomFactory().createRoom();
+        Room hallway = new HallwayRoomFactory().createRoom();
+        Room library = new LibraryRoomFactory().createRoom();
         Room armory = new ArmoryRoomFactory().createRoom();
+        Room treasureRoom = new TreasureRoomFactory().createRoom();
+        Room trapRoom = new TrapRoomFactory().createRoom();
         Room exit = new ExitRoomFactory().createRoom();
 
-        dungeon.setExit("north", armory);
-        armory.setExit("south", dungeon);
+        // Main correct path:
+        // Dungeon -> Hallway -> Armory -> Exit Room
+        dungeon.setExit("north", hallway);
+
+        hallway.setExit("south", dungeon);
+        hallway.setExit("north", armory);
+
+        armory.setExit("south", hallway);
         armory.setExit("east", exit);
+
         exit.setExit("west", armory);
 
+        // Dead-end side path from the hallway.
+        // Player can return to the correct path.
+        hallway.setExit("west", library);
+        library.setExit("east", hallway);
+
+        // Dead-end side path from the armory.
+        // Treasure Room leads to Trap Room, but both have a way back.
+        armory.setExit("west", treasureRoom);
+        treasureRoom.setExit("east", armory);
+        treasureRoom.setExit("south", trapRoom);
+        trapRoom.setExit("north", treasureRoom);
+
         rooms.put("dungeon", dungeon);
+        rooms.put("hallway", hallway);
+        rooms.put("library", library);
         rooms.put("armory", armory);
+        rooms.put("treasure", treasureRoom);
+        rooms.put("trap", trapRoom);
         rooms.put("exit", exit);
 
         currentRoom = dungeon;
