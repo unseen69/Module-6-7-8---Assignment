@@ -42,6 +42,24 @@ public class Player {
         }
     }
 
+    public String getInventoryItemNames() {
+        if (inventory.isEmpty()) {
+            return "none";
+        }
+
+        StringBuilder itemNames = new StringBuilder();
+
+        for (Item item : inventory) {
+            if (itemNames.length() > 0) {
+                itemNames.append(", ");
+            }
+
+            itemNames.append(item.getName());
+        }
+
+        return itemNames.toString();
+    }
+
     public String getName() {
         return name;
     }

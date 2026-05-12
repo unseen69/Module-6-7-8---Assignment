@@ -1,6 +1,7 @@
 package game;
 
 import game.command.Command;
+import game.command.InventoryCommand;
 import game.command.LookCommand;
 import game.command.MoveCommand;
 import game.command.QuitCommand;
@@ -42,8 +43,8 @@ public class GameManager {
         running = true;
 
         System.out.println("Welcome to Dungeon Escape!");
-        System.out.println("Type commands such as: look, move north, take key, use key, quit");
-        System.out.println();
+        System.out.println("Find the key and escape the dungeon.");
+        showCommands();
 
         while (running) {
             System.out.print("> ");
@@ -55,6 +56,10 @@ public class GameManager {
             if (player.hasEscaped()) {
                 System.out.println("You escaped the dungeon. You win!");
                 running = false;
+            }
+
+            if (running) {
+                showCommands();
             }
         }
 
@@ -81,6 +86,15 @@ public class GameManager {
     }
 
     private Command parseCommand(String input) {
+        if (input == null || input.isEmpty()) {
+            return new Command() {
+                @Override
+                public void execute() {
+                    System.out.println("Please enter a command.");
+                }
+            };
+        }
+
         String[] parts = input.split(" ");
 
         String action = parts[0];
@@ -90,15 +104,17 @@ public class GameManager {
             target = parts[1];
         }
 
-        if (action.equals("look")) {
+        if (action.equals("look") || action.equals("l")) {
             return new LookCommand(player, currentRoom);
-        } else if (action.equals("move")) {
+        } else if (action.equals("inventory") || action.equals("i")) {
+            return new InventoryCommand(player, currentRoom);
+        } else if (action.equals("move") || action.equals("m")) {
             return new MoveCommand(this, player, currentRoom, target);
-        } else if (action.equals("take")) {
+        } else if (action.equals("take") || action.equals("t")) {
             return new TakeCommand(player, currentRoom, target);
-        } else if (action.equals("use")) {
+        } else if (action.equals("use") || action.equals("u")) {
             return new UseCommand(player, currentRoom, target);
-        } else if (action.equals("quit")) {
+        } else if (action.equals("quit") || action.equals("q")) {
             return new QuitCommand(this);
         } else {
             return new Command() {
@@ -109,6 +125,29 @@ public class GameManager {
             };
         }
     }
+
+    private void showCommands() {
+        System.out.println();
+        System.out.println("Commands:");
+        System.out.printf("%-28s %-28s %-28s%n",
+                "L - Look - Look around",
+                "I - Inventory - Show items",
+                "Q - Quit - Quit game");
+
+        System.out.printf("%-28s %-28s %-28s%n",
+                "M - North - Move north",
+                "M - South - Move south",
+                "M - East - Move east");
+
+        System.out.printf("%-28s %-28s %-28s%n",
+                "M - West - Move west",
+                "T - Take item"  + roomItem,
+                "U - Use item" + inventoryItems);
+
+        System.out.println();
+    }
+
+
 
     public void moveToRoom(Room room) {
         currentRoom = room;
