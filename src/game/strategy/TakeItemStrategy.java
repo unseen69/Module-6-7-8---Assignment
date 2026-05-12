@@ -8,7 +8,7 @@ public class TakeItemStrategy implements ActionStrategy {
 
     @Override
     public void execute(Player player, Room room, String itemName) {
-        if (itemName == null || itemName.isBlank()) {
+        if (itemName == null || itemName.trim().isEmpty()) {
             System.out.println("Take what?");
             return;
         }

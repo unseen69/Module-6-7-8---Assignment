@@ -7,7 +7,7 @@ public class UseItemStrategy implements ActionStrategy {
 
     @Override
     public void execute(Player player, Room room, String itemName) {
-        if (itemName == null || itemName.isBlank()) {
+        if (itemName == null || itemName.trim().isEmpty()) {
             System.out.println("Use what?");
             return;
         }

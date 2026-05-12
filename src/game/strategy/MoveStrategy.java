@@ -14,7 +14,7 @@ public class MoveStrategy implements ActionStrategy {
 
     @Override
     public void execute(Player player, Room room, String direction) {
-        if (direction == null || direction.isBlank()) {
+        if (direction == null || direction.trim().isEmpty()) {
             System.out.println("Move where?");
             return;
         }
