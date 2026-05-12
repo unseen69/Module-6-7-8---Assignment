@@ -127,8 +127,12 @@ public class GameManager {
     }
 
     private void showCommands() {
+        String roomItem = currentRoom.getAvailableItemName();
+        String inventoryItems = player.getInventoryItemNames();
+
         System.out.println();
         System.out.println("Commands:");
+
         System.out.printf("%-28s %-28s %-28s%n",
                 "L - Look - Look around",
                 "I - Inventory - Show items",
@@ -140,9 +144,9 @@ public class GameManager {
                 "M - East - Move east");
 
         System.out.printf("%-28s %-28s %-28s%n",
-                "M - West - Move west",
-                "T - Take item"  + roomItem,
-                "U - Use item" + inventoryItems);
+                "M west - Move west",
+                "T - Take item " + roomItem,
+                "U - Use item " + inventoryItems);
 
         System.out.println();
     }
